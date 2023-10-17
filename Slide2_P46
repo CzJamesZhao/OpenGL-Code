@@ -1,0 +1,61 @@
+// 引入GLUT库和数学库的头文件
+#include <GL/glut.h>
+#include <math.h>
+
+// display函数用于处理OpenGL绘图命令
+void display() {
+    // 设置清屏颜色为红色
+    glClearColor(1.0, 0, 0, 0);
+    
+    // 执行清屏操作
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    // 设置绘图颜色为黄色
+    glColor3f(1.0, 1.0, 0);
+    
+    // 定义圆的半径为0.5
+    float r = 0.5;
+    
+    // 定义圆的近似段数为150，意味着使用150个点来近似绘制一个圆
+    int num = 150;
+    
+    // 设置线宽为5像素
+    glLineWidth(5);
+    
+    // 开始绘制闭合线段（用于绘制圆）
+    glBegin(GL_LINE_LOOP);
+    
+    // 循环绘制圆上的每一个点
+    for (int i = 0; i < num; i++) {
+        // 计算每个点在圆上的角度
+        float theta = 2.0f * 3.1415926535f * float(i) / float(num);
+        
+        // 根据角度和半径计算圆上的x和y坐标
+        float x = r * cosf(theta);
+        float y = r * sinf(theta);
+        
+        // 在该位置绘制一个点
+        glVertex2f(x, y);
+    }
+    
+    // 结束绘图命令
+    glEnd();
+    
+    // 确保所有OpenGL绘图命令都被执行
+    glFlush();
+}
+
+// 主程序入口
+int main(int argc, char** argv) {
+    // 初始化GLUT库
+    glutInit(&argc, argv);
+    
+    // 创建一个名为"Circle"的窗口
+    glutCreateWindow("Circle");
+    
+    // 注册display函数作为窗口的绘图回调函数
+    glutDisplayFunc(display);
+    
+    // 启动GLUT的事件处理循环
+    glutMainLoop();
+}
